@@ -12,7 +12,7 @@ export default defineConfig([
   {
     files: ["**/*.{js,ts}"],
     rules: {
-      indent: ["error", 2],                // 2 espaços
+      indent: ["error", 4],                // 2 espaços
       quotes: ["error", "double"],         // aspas duplas
       semi: ["error", "always"],           // ponto e vírgula obrigatório
       "linebreak-style": ["error", "windows"]
