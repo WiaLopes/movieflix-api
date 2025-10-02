@@ -1,5 +1,6 @@
 import express from "express";
 import { PrismaClient } from "./generated/prisma";
+import swaggerUi from "swagger-ui-express";
 
 const port = 3000;
 const app = express();
@@ -104,6 +105,29 @@ app.delete("/movies/:id", async (req, res) => {
 
     res.status(200).send();
 
+});
+
+//Filtrar filmes por gênero
+app.get("/movies/:genderName", async (req, res) => {
+    try {
+        const moviesFilteredByGenderName = await prisma.movie.findMany({
+            include: {
+                genres: true,
+                languages: true,
+            },
+            where: {
+                genres: {
+                    name: {
+                        equals: "genderName",
+                        mode: "insensitive",
+                    },
+                },
+            },
+        });
+        res.status(200).send(moviesFilteredByGenderName);
+    } catch (error) {
+        return res.status(500).send({ message: "Falha ao atualizar um filme" });
+    }
 });
 
 app.listen(port, () => {
